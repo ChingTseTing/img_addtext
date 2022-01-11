@@ -18,7 +18,7 @@ from flask import send_from_directory
 
 @app.route("/result/<token>")
 def get_image_url(token):
-    return send_from_directory('/tmp/', filename=f'{token}.png')
+    return send_from_directory('/tmp/', path=f'{token}.png')
 
 # LINE 聊天機器人的基本資料
 # 必須放上自己的Channel Access Token
