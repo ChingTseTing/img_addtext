@@ -37,53 +37,6 @@ def callback():
     return 'OK'
 
 
-
-def analysis_plot(record):
-  tt =  get_stock( record[1] ,record[2] , record[3] )
-  # Create subplots and mention plot grid size
-  fig = make_subplots(rows=3, cols=1, shared_xaxes=True, vertical_spacing=0.03, subplot_titles=( record[1] , ''), row_width=[0.3, 0.3,1])
-  # Plot OHLC on 1st row
-  fig.add_trace(go.Candlestick(x=tt.index, open=tt["Open"], high=tt["High"],low=tt["Low"], close=tt["Close"], name="OHLC", showlegend=True ), row=1, col=1 )
-  fig.add_trace(go.Scatter(x=tt.index, y=ta.SMA( np.array(tt['Close']) ,timeperiod=5), mode='lines' ,name='MA5', showlegend=True)  , row=1, col=1 )
-  fig.add_trace(go.Scatter(x=tt.index, y=ta.SMA( np.array(tt['Close']) ,timeperiod=10), mode='lines' ,name='MA10', showlegend=True)  , row=1, col=1 )
-  fig.add_trace(go.Scatter(x=tt.index, y=ta.SMA( np.array(tt['Close']) ,timeperiod=20), mode='lines' ,name='MA20', showlegend=True)  , row=1, col=1 )
-  fig.add_trace(go.Scatter(x=tt.index, y=ta.SMA( np.array(tt['Close']) ,timeperiod=60), mode='lines' ,name='MA60', showlegend=True)  , row=1, col=1 )
-  # Bar trace for volumes on 2nd row without legend
-  fig.add_trace(go.Bar(x=tt.index, y=tt['Volume'], showlegend=False), row=2, col=1)
-  # plot index
-  if record[4]=="RSI":
-    fig.add_trace(go.Scatter(x=tt.index, y=ta.RSI(tt['Close']), mode='lines' ,name=record[4], showlegend=True)  , row=3, col=1 ) #ta.RSI( np.array(tt['Close']) ,timeperiod=14)
-    fig['layout']['yaxis3']['title']='RSI' 
-  if record[4]=="KD":
-    K,D = ta.STOCH(tt['High'], tt['Low'], tt['Close'])
-    fig.add_trace(go.Scatter(x=tt.index, y=K, mode='lines' ,name='K', showlegend=True)  , row=3, col=1 ) #ta.RSI( np.array(tt['Close']) ,timeperiod=14)
-    fig.add_trace(go.Scatter(x=tt.index, y=D, mode='lines' ,name='D', showlegend=True)  , row=3, col=1 ) #ta.RSI( np.array(tt['Close']) ,timeperiod=14)
-    fig['layout']['yaxis3']['title']='KD'
-  if record[4]=="MACD":
-    MACD_DIF , MACD_SIGNAL, MACD_BAR = ta.MACD(tt['Close'])
-    fig.add_trace(go.Scatter(x=tt.index, y=MACD_DIF, mode='lines' ,name='MACD_DIF', showlegend=True)  , row=3, col=1 ) #ta.RSI( np.array(tt['Close']) ,timeperiod=14)
-    fig.add_trace(go.Scatter(x=tt.index, y=MACD_SIGNAL, mode='lines' ,name='MACD_SIGNAL', showlegend=True)  , row=3, col=1 ) #ta.RSI( np.array(tt['Close']) ,timeperiod=14)
-    fig.add_trace(go.Bar(x=tt.index, y=MACD_BAR,name='MACD_BAR', showlegend=True)  , row=3, col=1 ) #ta.RSI( np.array(tt['Close']) ,timeperiod=14)
-    fig['layout']['yaxis3']['title']='MACD'
-
-  fig['layout']['yaxis']['title']='Price'
-  fig['layout']['yaxis2']['title']='Volume'
-
-  fig.update_layout(margin=dict(l=30, r=30, t=30, b=30) , template='plotly_dark',paper_bgcolor ='rgb(10,10,10)')
-  # Do not show OHLC's rangeslider plot 
-  fig.update(layout_xaxis_rangeslider_visible=False)
-  # save image
-  fig.write_image("send.png")
-  CLIENT_ID = "08680019f3643c6"  #"TingChingTse"
-  PATH = "send.png"
-  im = pyimgur.Imgur(CLIENT_ID)
-  uploaded_image = im.upload_image(PATH, title="Uploaded with PyImgur")
-  return uploaded_image.link
-
-
-
-
-
 def access_database():    
     DATABASE_URL = os.environ["DATABASE_URL"]
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
@@ -170,7 +123,6 @@ def img_getlink( imgpath):
 	return upload_image.link
 
 
-
 # 文字事件
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -180,7 +132,8 @@ def handle_message(event):
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image(event):
   SendImage = line_bot_api.get_message_content(event.message.id)
-  local_save =    'tmp.png'  #'./Image/' +
+  local_save =    f"/tmp/myimg.png"  # 'tmp.png'  './Image/' +
+		 
   with open(local_save, 'wb') as fd:
     for chenk in SendImage.iter_content():
       fd.write(chenk)
@@ -195,18 +148,6 @@ def handle_image(event):
   line_bot_api.reply_message(event.reply_token, ImageSendMessage(original_content_url=img_url, preview_image_url=img_url))
 
 
-
-  # message_content = line_bot_api.get_message_content(event.message.id)
-
-	# SendImage = line_bot_api.get_message_content(event.message.id)
-	# local_save = './static/' + event.message.id + '.png'
-	# with open(local_save, 'wb') as fd:
-	# 	for chenk in SendImage.iter_content():
-	# 		fd.write(chenk)
-
-
-#   line_bot_api.reply_message(event.reply_token, ImageSendMessage(original_content_url = ngrok_url + "/static/" + event.message.id + ".png", preview_image_url = ngrok_url + "/static/" + event.message.id + ".png"))
-  # line_bot_api.reply_message(event.reply_token, TextSendMessage(text=os.getcwd() )  )
 
 
 #主程式
