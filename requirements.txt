@@ -1,0 +1,14 @@
+line-bot-sdk
+bs4
+flask
+yfinance
+pyimgur
+psycopg2
+plotly==5.3.1
+sklearn
+keras
+tensorflow-cpu
+kaleido
+requests
+configparser
+python-dotenv
