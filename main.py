@@ -192,8 +192,7 @@ def handle_image(event):
   tmp.save(  local_save  )
   
   img_url = img_getlink(local_save)
-
-	line_bot_api.reply_message(event.reply_token, ImageSendMessage(original_content_url=img_url, preview_image_url=img_url))
+  line_bot_api.reply_message(event.reply_token, ImageSendMessage(original_content_url=img_url, preview_image_url=img_url))
 
 
 
@@ -206,7 +205,7 @@ def handle_image(event):
 	# 		fd.write(chenk)
 
 
-  line_bot_api.reply_message(event.reply_token, ImageSendMessage(original_content_url = ngrok_url + "/static/" + event.message.id + ".png", preview_image_url = ngrok_url + "/static/" + event.message.id + ".png"))
+#   line_bot_api.reply_message(event.reply_token, ImageSendMessage(original_content_url = ngrok_url + "/static/" + event.message.id + ".png", preview_image_url = ngrok_url + "/static/" + event.message.id + ".png"))
   # line_bot_api.reply_message(event.reply_token, TextSendMessage(text=os.getcwd() )  )
 
 
