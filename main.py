@@ -14,7 +14,11 @@ import psycopg2
 from PIL import Image , ImageDraw , ImageFont
 from datetime import datetime
 app = Flask(__name__)
+from flask import send_from_directory
 
+@app.route("/result/<token>")
+def get_image_url(token):
+    return send_from_directory('/tmp/', filename=f'{token}.png')
 
 # LINE 聊天機器人的基本資料
 # 必須放上自己的Channel Access Token
@@ -144,7 +148,10 @@ def handle_image(event):
   draw.text( xy=( 0.75*tmp.size[0] , 0.8*tmp.size[1] ) , text = 'Iris Chong' , fill = (255, 255 , 255) , font=font )
   tmp.save(  local_save  )
   
-  img_url = img_getlink(local_save)
+  img_url = f'https://{os.getenv("YOUR_HEROKU_APP_NAME")}.herokuapp.com/result/{file_name}'
+
+
+#   img_url = img_getlink(local_save)
   line_bot_api.reply_message(event.reply_token, ImageSendMessage(original_content_url=img_url, preview_image_url=img_url))
 
 
