@@ -132,7 +132,8 @@ def handle_message(event):
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image(event):
   SendImage = line_bot_api.get_message_content(event.message.id)
-  local_save =   '/tmp/myimg.png'
+  file_name = event.reply_token
+  local_save =  f"/tmp/{file_name}.png" # '/tmp/myimg.png'
   with open(local_save, 'wb') as fd:
     for chenk in SendImage.iter_content():
       fd.write(chenk)
