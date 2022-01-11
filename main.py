@@ -169,8 +169,10 @@ def update_record(user_id, col, value, TABLE_NAME):
 def handle_message(event):
   message = TextSendMessage(text=event.message.text)
   line_bot_api.reply_message(event.reply_token, TextSendMessage(text=os.getcwd() )  )
-        
-   
+# 照片事件   
+@handler.add(MessageEvent, message=ImageMessage)
+def handle_image(event):
+  line_bot_api.reply_message(event.reply_token, TextSendMessage(text=os.getcwd() )  )
 
 #主程式
 if __name__ == "__main__":
