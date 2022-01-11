@@ -1,1 +1,1 @@
-web: python fintech_final_project.py
+web: python main.py
