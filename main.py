@@ -18,7 +18,7 @@ from flask import send_from_directory
 
 @app.route("/result/<token>")
 def get_image_url(token):
-    return send_from_directory('/tmp/', path=f'{token}.png')
+    return send_from_directory('/tmp/', path=f'{token}.jpeg')
 
 # LINE 聊天機器人的基本資料
 # 必須放上自己的Channel Access Token
@@ -137,7 +137,7 @@ def handle_message(event):
 def handle_image(event):
   SendImage = line_bot_api.get_message_content(event.message.id)
   file_name = event.reply_token
-  local_save =  f"/tmp/{file_name}.png" # '/tmp/myimg.png'
+  local_save =  f"/tmp/{file_name}.jpeg" # '/tmp/myimg.png'
   with open(local_save, 'wb') as fd:
     for chenk in SendImage.iter_content():
       fd.write(chenk)
