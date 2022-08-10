@@ -145,7 +145,7 @@ def handle_image(event):
   tmp = Image.open(    local_save   )
   draw = ImageDraw.Draw(tmp)
   font = ImageFont.truetype( font = "Times New Roman.ttf"  , size = 20 )
-  draw.text( xy=( 0.75*tmp.size[0] , 0.8*tmp.size[1] ) , text = 'Iris Chong' , fill = (255, 255 , 255) , font=font )
+  draw.text( xy=( 0.75*tmp.size[0] , 0.8*tmp.size[1] ) , text = 'Ching-Tse Ting' , fill = (255, 255 , 255) , font=font )
   tmp.save(  local_save  )
   
   img_url = f'https://{os.getenv("YOUR_HEROKU_APP_NAME")}.herokuapp.com/result/{file_name}'
