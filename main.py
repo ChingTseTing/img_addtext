@@ -8,6 +8,8 @@ from linebot import (
 from linebot.exceptions import (
     InvalidSignatureError
 )
+from flask_app import db, login_manager, app
+
 from linebot.models import *
 import sys, os
 import pyimgur
