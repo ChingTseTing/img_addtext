@@ -151,7 +151,7 @@ def handle_image(event):
   draw.text( xy=( 0.75*tmp.size[0] , 0.8*tmp.size[1] ) , text = 'Iris Chong' , fill = (255, 255 , 255) , font=font )
   tmp.save(  local_save  )
   
-  img_url = f'https://{os.getenv("YOUR_HEROKU_APP_NAME")}.herokuapp.com/result/{file_name}'
+  img_url = img_getlink(  local_save)#f'https://{os.getenv("YOUR_HEROKU_APP_NAME")}.herokuapp.com/result/{file_name}'
 
 
 #   img_url = img_getlink(local_save)
