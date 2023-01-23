@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #載入LineBot所需要的套件
+from app import app
 from flask import Flask, request, abort
 from linebot import (
     LineBotApi, WebhookHandler
@@ -158,6 +159,6 @@ def handle_image(event):
 
 
 #主程式
-#if __name__ == "__main__":
+if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
