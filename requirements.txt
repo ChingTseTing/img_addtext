@@ -4,3 +4,4 @@ pyimgur
 psycopg2
 Pillow
 datetime
+gunicorn==20.1.0
