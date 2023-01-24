@@ -8,7 +8,7 @@ from linebot import (
 from linebot.exceptions import (
     InvalidSignatureError
 )
-from flask_app import db, login_manager, app
+
 
 from linebot.models import *
 import sys, os
@@ -159,8 +159,3 @@ def handle_image(event):
 
 
 
-
-#主程式
-if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 5000))
-    app.run(debug=False,host='0.0.0.0', port=port)
