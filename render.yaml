@@ -1,6 +1,6 @@
 services:
 - type: web
-  name: line-bot-python-flask
+  name: bot1
   env: python
   repo:   https://github.com/ChingTseTing/img_addtext.git 
   buildCommand: cd examples/flask-echo;pip install gunicorn -r requirements.txt
