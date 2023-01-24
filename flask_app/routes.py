@@ -1,4 +1,38 @@
 
+    table_columns = '(user_id,  problem ,stock, period, interval, indicator ,model, result_model , predicted_price)'
+    postgres_insert_query = "INSERT INTO "+ TABLE_NAME + f" {table_columns} VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    record = (user_id, problem ,'2330.TW', '3y', '1d', 'MACD','LSTM' ,'0','0')
+    cursor.execute(postgres_insert_query, record)
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return record
+
+def check_record(user_id, TABLE_NAME):
+    conn, cursor = access_database()
+    postgres_select_query = "SELECT * FROM "+ TABLE_NAME + f" WHERE user_id = '{user_id}';"
+    cursor.execute(postgres_select_query)
+    user_settings = cursor.fetchone()
+    return user_settings
+
+def find_record(user_id, TABLE_NAME, col_name):
+    conn, cursor = access_database()
+    postgres_select_query = "SELECT "+col_name+" FROM "+ TABLE_NAME + f" WHERE user_id = '{user_id}';"
+    cursor.execute(postgres_select_query)
+    user_settings = cursor.fetchone()
+    return user_settings
+
+def update_record(user_id, col, value, TABLE_NAME):
+    conn, cursor = access_database()
+    postgres_update_query = "UPDATE " + TABLE_NAME +f" SET {col} = %s WHERE user_id = %s"
+    cursor.execute(postgres_update_query, (value, user_id))
+    conn.commit()
+    postgres_select_query = "SELECT * FROM "+ TABLE_NAME + f" WHERE user_id = '{user_id}';"
+    cursor.execute(postgres_select_query)
+    user_settings = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return user_settings
 
 
 
