@@ -4,7 +4,7 @@ services:
   env: python
   repo:   https://github.com/ChingTseTing/img_addtext.git 
   buildCommand: cd examples/flask-echo;pip install gunicorn -r requirements.txt
-  startCommand: cd examples/flask-echo;gunicorn app:app
+  startCommand: cd examples/flask-echo;gunicorn routes:app
   plan: free
   autoDeploy: false
   envVars:
