@@ -9,11 +9,11 @@ services:
   autoDeploy: True
   envVars:
   - key: CHANNEL_ACCESS_TOKEN
-    sync: True
+    sync: false
   - key: CHANNEL_SECRET
-    sync: True
+    sync: false
   - key: DATABASE_URL
-    sync: True
+    sync: false
 # - type: web
 #   name: line-bot-python-flask-with-handler
 #   env: python
