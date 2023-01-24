@@ -1,17 +1,19 @@
 services:
 - type: web
-  name: bot1
+  name: Bot1
   env: python
   repo:   https://github.com/ChingTseTing/img_addtext.git 
   buildCommand: cd examples/flask-echo;pip install gunicorn -r requirements.txt
   startCommand: cd examples/flask-echo;gunicorn routes:app
   plan: free
-  autoDeploy: false
+  autoDeploy: True
   envVars:
   - key: CHANNEL_ACCESS_TOKEN
-    sync: false
+    sync: True
   - key: CHANNEL_SECRET
-    sync: false
+    sync: True
+  - key: DATABASE_URL
+    sync: True
 # - type: web
 #   name: line-bot-python-flask-with-handler
 #   env: python
