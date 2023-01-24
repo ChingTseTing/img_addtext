@@ -1,17 +1,5 @@
 
 
-def update_record(user_id, col, value, TABLE_NAME):
-    conn, cursor = access_database()
-    postgres_update_query = "UPDATE " + TABLE_NAME +f" SET {col} = %s WHERE user_id = %s"
-    cursor.execute(postgres_update_query, (value, user_id))
-    conn.commit()
-    postgres_select_query = "SELECT * FROM "+ TABLE_NAME + f" WHERE user_id = '{user_id}';"
-    cursor.execute(postgres_select_query)
-    user_settings = cursor.fetchone()
-    cursor.close()
-    conn.close()
-    return user_settings
-
 
 
 def img_getlink( imgpath):
@@ -46,6 +34,4 @@ def handle_image(event):
 
 #   img_url = img_getlink(local_save)
   line_bot_api.reply_message(event.reply_token, ImageSendMessage(original_content_url=img_url, preview_image_url=img_url))
-
-
 
